@@ -1,5 +1,4 @@
 name: run get_house_info.py
-#github token: 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
 on:
 #   push:
 #     branches:
