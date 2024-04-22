@@ -45,7 +45,7 @@ def get_house_info(house_path, house_info):
 
         time.sleep(2)
         try:
-            response = requests.get(i, headers= headers, timeout=10)
+            response = requests.get(i, headers= headers, timeout=20)
             print("Success")
         except:
             print("Timeout")
@@ -113,7 +113,7 @@ if __name__ == "__main__":
     all_files_github = get_all_files(repo_name='Mogi_HousePrices_Pipeline')
     file_house_name = f'house({get_date()}).csv'
     house_path = "/dags/data/" + file_house_name
-    
+
     #check house_path in all_files_github
     if house_path in all_files_github:
         house_info_name = f'house_info({get_date()}).csv'
