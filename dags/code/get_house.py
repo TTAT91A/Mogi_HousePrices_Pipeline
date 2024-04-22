@@ -37,7 +37,14 @@ def get_house_link(path):
     while True:
         link_root = 'https://mogi.vn/ho-chi-minh/mua-nha?cp='+str(i)
         ##
-        response = requests.get(link_root, timeout=20, headers=headers)
+        while True:
+            try:
+                response = requests.get(link_root, headers= headers, timeout=20)
+                if response.status_code == 200:
+                    break
+            except:
+                continue  
+        # response = requests.get(link_root, timeout=20, headers=headers)
         soup = BeautifulSoup(response.content, 'html.parser')
 
         content0 = soup.find('ul', class_ = 'props').find_all('a', class_ = 'link-overlay')
