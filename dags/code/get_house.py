@@ -131,8 +131,8 @@ if __name__ == '__main__':
     dags_folder = os.path.dirname(folder_path)
     today = str(get_date())
 
-    file_name = 'house(2024-04-19) copy.csv'
+    file_name = FILE_NAME
     dest_path = dags_folder + f"/data/" + file_name
-    # get_house_link(dest_path) #write to file
+    get_house_link(dest_path) #write to file
     pushToGithub(local_file_path=dest_path, file_name=file_name, repo_name='Mogi_HousePrices_Pipeline')
     # print(get_all_files(repo_name="Mogi_HousePrices_Pipeline"))
