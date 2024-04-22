@@ -9,6 +9,10 @@ import os
 from github import Github
 from github import Auth
 import os
+from dotenv import load_dotenv, dotenv_values
+
+load_dotenv()
+TOKEN = os.getenv('GITHUB_TOKEN')
 
 headers = {
   "Accept": "*/*",
@@ -67,28 +71,12 @@ def get_house_link(path):
 def get_date():
     return datetime.now().date()
 
-# def push_to_github(filename, file_path):
-#     # token = Github('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')
-#     token = Github("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")
-#     repo = token.get_repo('TTAT91A/House_Prices_Pipeline')
-
-#     folder_path = os.path.join(os.path.dirname(__file__))
-#     data_folder_path = os.path.join(os.path.dirname(folder_path), "data")
-#     print(data_folder_path)
-#     with open(file_path, 'r', encoding='utf-8') as file:
-#         data = file.read()
-
-#     destination_git_path = 'dags/data1/' + filename
-#     commit = f"upload {filename}"
-
-#     repo.create_file(destination_git_path, commit, data, branch='main')
-
 def connect_github(username, password, repo_name='House_Prices_Pipeline'):
     g = Github(username, password)
     repo = g.get_user().get_repo(repo_name)
     return repo
 
-def get_all_files(username='TTAT91A', password="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", repo_name='House_Prices_Pipeline'):
+def get_all_files(username='TTAT91A', password=TOKEN, repo_name='House_Prices_Pipeline'):
     # repo = g.get_user().get_repo('Mogi_HousePrices_Pipeline')
     repo = connect_github(username, password, repo_name=repo_name)
 
@@ -103,7 +91,7 @@ def get_all_files(username='TTAT91A', password="ghp_qACimOKcjV0foXuDvAKYaQ1ZIudc
             all_files.append(str(file).replace('ContentFile(path="','').replace('")',''))
     return all_files
 
-def pushToGithub(local_file_path, username='TTAT91A', password="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"):
+def pushToGithub(local_file_path, username='TTAT91A', password=TOKEN):
     # g = Github(username, password)
     # # repo = g.get_user().get_repo('Mogi_HousePrices_Pipeline')
     # repo = g.get_user().get_repo('House_Prices_Pipeline')

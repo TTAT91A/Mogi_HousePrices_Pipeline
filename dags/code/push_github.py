@@ -1,9 +1,12 @@
 from github import Github
 import os
+from dotenv import load_dotenv, dotenv_values
+
+load_dotenv()
+TOKEN = os.getenv('GITHUB_TOKEN')
 
 def push_to_github(filename, file_path):
-    # token = Github('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')
-    token = Github("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")
+    token = Github(TOKEN)
     repo = token.get_repo('TTAT91A/House_Prices_Pipeline')
 
     folder_path = os.path.join(os.path.dirname(__file__))
