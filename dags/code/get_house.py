@@ -118,7 +118,7 @@ def pushToGithub(local_file_path, username='TTAT91A', password=TOKEN, file_name=
     git_file = 'dags/data/' + file_name #check file in repo
     if git_file in all_files:
         contents = repo.get_contents(git_file)
-        commit = "Upload file " + str(today)
+        commit = "Updated file " + str(today)
         repo.update_file(contents.path, commit, content, contents.sha, branch="main")
         print(git_file + ' UPDATED')
     else:
@@ -135,4 +135,4 @@ if __name__ == '__main__':
     dest_path = dags_folder + f"/data/" + file_name
     get_house_link(dest_path) #write to file
     pushToGithub(local_file_path=dest_path, file_name=file_name, repo_name='Mogi_HousePrices_Pipeline')
-    # print(get_all_files(repo_name="Mogi_HousePrices_Pipeline"))
+    print(get_all_files(repo_name="Mogi_HousePrices_Pipeline"))
