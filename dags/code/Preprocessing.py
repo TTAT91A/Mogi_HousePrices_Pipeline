@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
-from pathlib import Path
+from pathlib import Path 
+import pushToGithub
 
 def read_csv(text):
     df = pd.read_csv(text)
@@ -65,11 +66,13 @@ if __name__ == '__main__':
     dags_path = os.path.dirname(folder_path)
     today = date.today()
 
-    input_path = dags_path +f'/data1/house_info_today({today}).csv'
-    output_path = dags_path +f'/data1/processed({today}).csv'
+    input_path = "https://raw.githubusercontent.com/TTAT91A/House_Prices_Pipeline/main/dags/data/" + f'house_info({today}).csv'
+    output_path = dags_path +f'/data/processed({today}).csv'
 
     house_df = read_csv(input_path)
     duplicated(house_df)
     convert_data(house_df) 
     missing_value(house_df)
     save_data(output_path)
+
+    pushToGithub.pushToGithub(local_file_path=output_path, file_name=f'processed({today}).csv', repo_name='Mogi_HousePrices_Pipeline')

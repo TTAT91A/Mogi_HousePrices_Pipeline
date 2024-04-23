@@ -9,7 +9,8 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import os
 import time
-from get_house import get_all_files, pushToGithub
+
+import pushToGithub
 
 
 headers = {
@@ -110,7 +111,7 @@ if __name__ == "__main__":
     # input_path = dags_folder + f"/data/house ({today}).csv"
     # output_path = dags_folder + f"/data/house_info ({today}).csv"
 
-    all_files_github = get_all_files(repo_name='Mogi_HousePrices_Pipeline')
+    all_files_github = pushToGithub.get_all_files(repo_name='Mogi_HousePrices_Pipeline')
     file_house_name = f'house({get_date()}).csv'
     house_path = "/dags/data/" + file_house_name
 
@@ -125,6 +126,6 @@ if __name__ == "__main__":
         get_house_info(input_path, output_path)
 
         # push house_info file to github
-        pushToGithub(output_path, repo_name='Mogi_HousePrices_Pipeline')
+        pushToGithub.pushToGithub(local_file_path=output_path, file_name=house_info_name ,repo_name='Mogi_HousePrices_Pipeline')
     else:
         print(f"{house_path} not found")
