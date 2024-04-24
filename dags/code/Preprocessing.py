@@ -66,13 +66,22 @@ if __name__ == '__main__':
     dags_path = os.path.dirname(folder_path)
     today = date.today()
 
-    input_path = "https://raw.githubusercontent.com/TTAT91A/House_Prices_Pipeline/main/dags/data/" + f'house_info({today}).csv'
-    output_path = dags_path +f'/data/processed({today}).csv'
+    house_info_name = f"house_info_today({today}).csv"
+    house_info_path = "dags/data/" + house_info_name
+    all_files_github = pushToGithub.get_all_files(repo_name="Mogi_HousePrices_Pipeline")
+    if house_info_path in all_files_github:
+        processed_name = f"processed({today}).csv"
+        input_path = "https://raw.githubusercontent.com/TTAT91A/Mogi_HousePrices_Pipeline/main/dags/data1/" + house_info_name
+        output_path = dags_path + "/data1/" + processed_name
 
-    house_df = read_csv(input_path)
-    duplicated(house_df)
-    convert_data(house_df) 
-    missing_value(house_df)
-    save_data(output_path)
+        #preprocessing
+        house_df = read_csv(input_path)
+        duplicated(house_df)
+        convert_data(house_df) 
+        missing_value(house_df)
+        save_data(output_path)
 
-    pushToGithub.pushToGithub(local_file_path=output_path, file_name=f'processed({today}).csv', repo_name='Mogi_HousePrices_Pipeline')
+        #push to github
+        pushToGithub.pushToGithub(local_file_path=output_path, file_name=processed_name, repo_name="Mogi_HousePrices_Pipeline")
+    else:
+        print(f"{house_info_path} not found")

@@ -127,9 +127,16 @@ if __name__ == "__main__":
 
     today = str(get_date())
 
-    processed_path = "https://raw.githubusercontent.com/TTAT91A/House_Prices_Pipeline/main/dags/data/" + f'processed({today}).csv'
-    output_path = dags_folder + f"/data/overpass({today}).csv"
+    processed_name = f'processed({today}).csv'
+    processed_path_github = "dags/data1/" + processed_name
+    if processed_path_github in all_files_github:
+        overpass_name = f'overpass({today}).csv'
+        overpass_path = "dags/data1/" + overpass_name
 
-    overpass(processed_path, output_path)
+        processed_path = "https://raw.githubusercontent.com/TTAT91A/Mogi_HousePrices_Pipeline/main/dags/data1/" + processed_name
+        output_path = dags_folder + "/data1/" + overpass_name
+        overpass(processed_path, output_path)
 
-    pushToGithub.pushToGithub(local_file_path=output_path, file_name=f'overpass({today}).csv', repo_name='Mogi_HousePrices_Pipeline')
+        pushToGithub.pushToGithub(local_file_path=output_path, file_name=overpass_name, repo_name='Mogi_HousePrices_Pipeline')
+    else:
+        print(f"{processed_path_github} not found")

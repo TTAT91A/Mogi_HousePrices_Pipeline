@@ -33,7 +33,7 @@ if __name__ == "__main__":
     # import_csv_to_mongodb(df, collection_name)
     folder_path = os.path.join(os.path.dirname(__file__))
     dags_folder = os.path.dirname(folder_path)
-    df = pd.read_csv(f"{dags_folder}/dags/data/house_info ({get_date()}).csv")
+    df = pd.read_csv(f"{dags_folder}/dags/data/house_info({get_date()}).csv")
 
     # df = pd.read_csv("../data/house_info (2022-04-16).csv")
     # df = pd.read_csv(f"{dags_folder}/data/house_info (2022-04-16).csv")

@@ -8,7 +8,7 @@ on:
     - cron: '0 0 * * *' #At 00:00 everyday UTC ~ 7:00 everyday UTC+7
 
 jobs:
-  get_houses_links:
+  crawl_data:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,15 +26,15 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run get_house.py
-          python dags/code/get_house.py
+        run: python dags/code/get_house.py
 
       - name: Run get_house_info.py
-          python dags/code/get_house_info.py
+        run: python dags/code/get_house_info.py
 
       - name: Run preprocesing.py
-          python dags/code/Preprocessing.py
+        run: python dags/code/Preprocessing.py
         
       - name: Run overpass.py
-          python dags/code/overpass.py
+        run:  python dags/code/overpass.py
 
       
