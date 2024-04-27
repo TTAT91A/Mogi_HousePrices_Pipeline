@@ -1,7 +1,6 @@
 import os
 from datetime import datetime
 from github import Github
-from github import Auth
 import os
 from dotenv import load_dotenv, dotenv_values
 
