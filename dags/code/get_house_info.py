@@ -47,6 +47,7 @@ def get_house_info(house_path, house_info):
         time.sleep(2)
         try:
             response = requests.get(i, headers= headers, timeout=60)
+            print(i, response.status_code)
             if response.status_code == 200:
                 soup = BeautifulSoup(response.content, 'html.parser')
                 try:

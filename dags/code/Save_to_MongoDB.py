@@ -26,15 +26,11 @@ def get_date():
     return datetime.now().date()
 
 if __name__ == "__main__":
-    
     collection_name = "HCMCity"
+    today = get_date()
+    overpass_name = f'overpass({today}).csv'
 
-    # df = pd.read_csv(f"dags/data/house_info ({get_date()}).csv")
-    # import_csv_to_mongodb(df, collection_name)
-    folder_path = os.path.join(os.path.dirname(__file__))
-    dags_folder = os.path.dirname(folder_path)
-    df = pd.read_csv(f"{dags_folder}/dags/data/house_info({get_date()}).csv")
+    overpass_path = "https://raw.githubusercontent.com/TTAT91A/Mogi_HousePrices_Pipeline/main/dags/data1/" + overpass_name
 
-    # df = pd.read_csv("../data/house_info (2022-04-16).csv")
-    # df = pd.read_csv(f"{dags_folder}/data/house_info (2022-04-16).csv")
-    print(df)
+    df = pd.read_csv(overpass_path)
+    import_csv_to_mongodb(df, collection_name)
