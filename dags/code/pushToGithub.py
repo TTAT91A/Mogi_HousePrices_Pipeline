@@ -10,8 +10,10 @@ today = datetime.now().date()
 
 
 def connect_github(username, password, repo_name='House_Prices_Pipeline'):
-    g = Github(username, password)
-    repo = g.get_user().get_repo(repo_name)
+    # g = Github(username, password)
+    # repo = g.get_user().get_repo(repo_name)
+    g = Github(password)
+    repo = g.get_repo(username + "/" + repo_name)
     return repo
 
 def get_all_files(username='TTAT91A', password=TOKEN, repo_name='Mogi_HousePrices_Pipeline'):
