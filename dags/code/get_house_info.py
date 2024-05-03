@@ -26,6 +26,46 @@ headers = {
   "Sec-Fetch-Site": "same-origin",
   "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0"
 }
+def vietnamese_numerical_to_numeric(vietnamese_str):
+    numerical_dict = {
+        'tỷ': 10**9,
+        'triệu': 10**6,
+        'nghìn': 10**3,
+        'đồng': 1,
+        'đ': 1
+    }
+
+    value = 0
+    current_value = 0
+    for word in vietnamese_str.split():
+        if word in numerical_dict:
+            current_value *= numerical_dict[word]
+            value += current_value
+            current_value = 0
+        else:
+            current_value += float(word.replace('tỷ', '').replace('triệu', '').replace('nghìn', ''))
+
+    return value
+
+def preprocess_house(df_house):
+    df_house = df_house[['link','price']]
+    df_house['link'] = df_house['link'].apply(lambda x: re.search(r"\-id([0-9]*)",x).group(1))
+    df_house.rename(columns={'price':'price(billionVND)', 'link':'id'},inplace=True)
+    df_house['id'] = pd.to_numeric(df_house['id'])
+
+    # Drop rows with NaN values in the 'id' column
+    df_house.dropna(subset=['id'], inplace=True)
+
+    df_house['id'] = df_house['id'].astype(int)
+
+    df_house['price(billionVND)'] = df_house['price(billionVND)'].apply(lambda x: vietnamese_numerical_to_numeric(x)/1000000000)
+    df_house.drop_duplicates(subset=['id'], inplace=True)
+    return df_house
+
+def preprocess_houseinfo(df_house_info, df_house):
+    df_house_info.drop_duplicates(subset=['id'], inplace=True)
+    df_merge = df_house_info.merge(df_house,on='id')
+    return df_merge
 
 def get_house_info(house_path, house_info):
     # os.path.isfile(house_path)
@@ -101,9 +141,11 @@ def get_house_info(house_path, house_info):
         except:
             print("Timeout: ",i)
 
-        
+    df = preprocess_house(df)
 
-    df_info.to_csv(house_info, index=None)
+    df_merge = preprocess_houseinfo(df_info, df)
+
+    df_merge.to_csv(house_info, index=None)
 
 def get_date():
     return datetime.now().date()
