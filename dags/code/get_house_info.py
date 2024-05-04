@@ -65,6 +65,12 @@ def preprocess_house(df_house):
 
 def preprocess_houseinfo(df_house_info, df_house):
     df_house_info.drop_duplicates(subset=['id'], inplace=True)
+    
+    df_house_info.loc[:, 'id'] = pd.to_numeric(df_house_info['id'], errors='coerce')
+    # Drop rows with NaN values in the 'id' column
+    df_house_info.dropna(subset=['id'], inplace=True)
+    df_house_info['id'] = df_house_info['id'].astype(int)
+
     df_merge = df_house_info.merge(df_house,on='id')
     return df_merge
 

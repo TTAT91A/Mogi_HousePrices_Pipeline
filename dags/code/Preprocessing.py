@@ -39,8 +39,9 @@ def convert_data(house_df):
     #Tách giá trị diện tích ở cột area_used
     house_df['area_used']=house_df['area_used'].str.extract(r'(\d+)').astype(float)
     #Tách các giá trị diện tích, chiều dài, chiều rộng ở cột area
-    extracted_data = house_df['area'].str.extract(r'(\d+(?:\.\d+)?) m2 \((\d+(?:,\d+)?)x(\d+(?:,\d+)?)\)')
-    house_df['area'] = extracted_data[0].astype(float)
+    # extracted_data = house_df['area'].str.extract(r'(\d+(?:\.\d+)?) m2 \((\d+(?:,\d+)?)x(\d+(?:,\d+)?)\)')
+    extracted_data = house_df['area'].str.extract(r'(\d+(?:,\d+)?) m2 \((\d+(?:,\d+)?)x(\d+(?:,\d+)?)\)')
+    house_df['area'] = extracted_data[0].str.replace(',', '.').astype(float)
     house_df['witdh'] = extracted_data[1]
     house_df['length'] = extracted_data[2]
     house_df['witdh'] = house_df['witdh'].str.replace(',', '.')
@@ -54,7 +55,7 @@ def missing_value(house_df):
     house_df['area_used'] = house_df['area_used'].fillna(house_df['area'])
     house_df=house_df.dropna();
     
-def save_data(text):
+def save_data(text, house_df):
     filepath = Path(text)  
     filepath.parent.mkdir(parents=True, exist_ok=True)  
     house_df.to_csv(filepath, encoding='utf-8-sig',index=False); 
@@ -79,7 +80,7 @@ if __name__ == '__main__':
         duplicated(house_df)
         convert_data(house_df) 
         missing_value(house_df)
-        save_data(output_path)
+        save_data(output_path, house_df)
 
         #push to github
         pushToGithub.pushToGithub(local_file_path=output_path, file_name=processed_name, repo_name="Mogi_HousePrices_Pipeline")
