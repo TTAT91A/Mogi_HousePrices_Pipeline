@@ -128,7 +128,7 @@ if __name__ == "__main__":
     today = str(get_date())
 
     processed_name = f'processed({today}).csv'
-    processed_path_github = "dags/data1/" + processed_name
+    processed_path_github = "dags/data/" + processed_name
     if processed_path_github in all_files_github:
         overpass_name = f'overpass({today}).csv'
         overpass_path = "dags/data1/" + overpass_name

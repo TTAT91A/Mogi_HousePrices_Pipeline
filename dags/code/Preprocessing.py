@@ -73,7 +73,7 @@ if __name__ == '__main__':
     if house_info_path in all_files_github:
         processed_name = f"processed({today}).csv"
         input_path = "https://raw.githubusercontent.com/TTAT91A/Mogi_HousePrices_Pipeline/main/dags/data1/" + house_info_name
-        output_path = dags_path + "/data1/" + processed_name
+        output_path = dags_path + "/data/" + processed_name
 
         #preprocessing
         house_df = read_csv(input_path)

@@ -165,7 +165,7 @@ if __name__ == "__main__":
 
     all_files_github = pushToGithub.get_all_files(repo_name='Mogi_HousePrices_Pipeline')
     file_house_name = f'house_today({get_date()}).csv'
-    house_path = "dags/data1/" + file_house_name
+    house_path = "dags/data/" + file_house_name
 
     #check house_path in all_files_github
     if house_path in all_files_github:
@@ -173,7 +173,7 @@ if __name__ == "__main__":
 
         input_path = "https://raw.githubusercontent.com/TTAT91A/Mogi_HousePrices_Pipeline/main/dags/data1/" + file_house_name
 
-        output_path = dags_folder + "/data1/" + house_info_name        
+        output_path = dags_folder + "/data/" + house_info_name        
         # export house_info file to local
         get_house_info(input_path, output_path)
 
