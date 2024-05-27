@@ -36,5 +36,5 @@ if __name__ == "__main__":
 
     overpass_path = "https://raw.githubusercontent.com/TTAT91A/Mogi_HousePrices_Pipeline/main/dags/data1/" + overpass_name
 
-    df = pd.read_csv(overpass_path)
+    df = pd.read_csv(overpass_path, dtype={'phone': str})
     import_csv_to_mongodb(df)
