@@ -39,4 +39,5 @@ if __name__ == "__main__":
     # start_date = '2024-05-01'
     # st_date = datetime.strptime(start_date, '%Y-%m-%d').date()
     # print(str(st_date.strftime('%d/%m/%Y')))
-    print(extract_by_date('2024-05-01', '2024-05-03'))
+    # print(extract_by_date('2024-05-01', '2024-05-03'))
+    df = extract_mongodb()

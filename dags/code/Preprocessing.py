@@ -49,7 +49,12 @@ def convert_data(house_df):
     house_df['witdh'] = house_df['witdh'].astype(float)
     house_df['length'] = house_df['length'].astype(float)
     #Tách giá trị cột seniority
-    house_df['seniority'] = house_df['seniority'].apply( convert_to_number);
+    house_df['seniority'] = house_df['seniority'].apply( convert_to_number)
+    # Xử lý phone
+    house_df['phone'] = pd.to_numeric(house_df['phone'], errors='coerce')
+    house_df['phone'].fillna(0, inplace=True)
+    house_df['phone'] = house_df['phone'].astype('int64')
+    house_df['phone'] = "0" + house_df['phone'].astype(str)
 
 def missing_value(house_df):
     house_df['area_used'] = house_df['area_used'].fillna(house_df['area'])
